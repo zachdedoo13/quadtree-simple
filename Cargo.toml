@@ -1,12 +1,13 @@
 workspace = { members = ["docs"] }
 [package]
 name = "quadtree_simple"
-version = "0.1.3"
+version = "0.1.5"
 authors = ["zachary campbell <zachary.campbell2006@outlook.com>"]
 description = "A simple quadtree implementation"
 license = "MIT"
 edition = "2021"
 repository = "https://github.com/zachdedoo13/quadtree-simple"
+documentation = "https://docs.rs/quadtree_simple/0.1.5/quadtree_simple/struct.Quadtree.html"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
