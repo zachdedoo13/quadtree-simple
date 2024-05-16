@@ -1,4 +1,55 @@
-// A point in 2D space with some data
+//! # Quadtree Simple
+//!
+//! `quadtree_simple` is a library for efficiently storing and querying points in 2D space using a quadtree data structure.
+//!
+//! ## Features
+//!
+//! - Efficiently store and query points in 2D space
+//! - Supports querying by rectangle and circle
+//! - Easy to use with a simple API
+//!
+//! ## Examples
+//!
+//! Here's a simple example of how to use `quadtree_simple`:
+//!
+//! ```
+//! use quadtree_simple::{Point, Qrect, Quadtree};
+//!
+//! let size = 50.0;
+//! let mut qt = Quadtree::new(Qrect::new(size, size, size, size), /* points per rect */4);
+//!
+//! let mut qt = Quadtree::new(Qrect::corners(/*top left*/(0., 0.), /*top right*/(50., 50.)), 4);
+//!
+//! let width = 50.; let height = 50.;
+//! let mut qt = Quadtree::new(Qrect::screen_size(width, height), 4);
+//!
+//! qt.insert(&Point::new(25., 25., 0));
+//!
+//! let found = qt.query_rect(&Qrect::range(25., 25., 1.));
+//! ```
+//!
+//! For more examples, see the [Examples](#examples) section.
+//!
+//! ## Installation
+//!
+//! Add this to your `Cargo.toml`:
+//!
+//! ```toml
+//! [dependencies]
+//! quadtree_simple = "0.1.0"
+//! ```
+//!
+//! Then run `cargo build` to build your project.
+//!
+//! ## License
+//!
+//! `quadtree_simple` is licensed under the MIT license. See [LICENSE](LICENSE) for more details.
+//!
+
+
+
+
+/// A point in 2D space with that holds some data
 #[derive(Clone, Debug)]
 pub struct Point<T: Clone> {
     pub x: f32,
@@ -12,7 +63,7 @@ impl<T: Clone> Point<T> {
 }
 
 
-// A rectangle anchored on center x, y with width w and height h
+/// A rectangle anchored on center x, y with width w and height h
 #[derive(Clone)]
 pub struct Qrect {
     pub x: f32,
@@ -29,11 +80,11 @@ impl Qrect {
         Self { x, y, w: range, h: range }
     }
 
-    pub fn corners(top_left: f32, bottom_right: f32) -> Self {
-        let w = bottom_right - top_left;
-        let h = bottom_right - top_left;
-        let x = top_left + w / 2.;
-        let y = top_left + h / 2.;
+    pub fn corners(top_left: (f32, f32), bottom_right: (f32, f32)) -> Self {
+        let x = (top_left.0 + bottom_right.0) / 2.;
+        let y = (top_left.1 + bottom_right.1) / 2.;
+        let w = (top_left.0 - bottom_right.0).abs() / 2.;
+        let h = (top_left.1 - bottom_right.1).abs() / 2.;
         Self { w, h, x, y }
     }
 
@@ -57,7 +108,7 @@ impl Qrect {
 }
 
 
-// A quadtree that can store points in 2D space
+/// A quadtree that can store points in 2D space
 #[derive(Clone)]
 pub struct Quadtree<T: Clone> {
     boundary: Qrect,
@@ -71,6 +122,7 @@ pub struct Quadtree<T: Clone> {
     bottom_right: Option<Box<Quadtree<T>>>,
 }
 impl<T: Clone> Quadtree<T> {
+    /// create new quadtree
     pub fn new(boundary: Qrect, capacity: usize) -> Self {
         Self {
             boundary,
@@ -85,7 +137,7 @@ impl<T: Clone> Quadtree<T> {
         }
     }
 
-    // Insert a point into the quadtree at the first possible location (x, y)
+    /// Insert a point into the quadtree at the first possible location (x, y)
     pub fn insert(&mut self, point: &Point<T>) -> bool {
         if !self.boundary.contains_point(&point) {
             return false
@@ -126,7 +178,7 @@ impl<T: Clone> Quadtree<T> {
         self.divided = true;
     }
 
-    // Query the quadtree for points within a rectangle
+    /// Query the quadtree for points within a rectangle
     pub fn query_rect(&self, range: &Qrect) -> Vec<Point<T>> {
         let mut found = vec![];
         if !self.boundary.intersects_rect(range) {
@@ -154,7 +206,7 @@ impl<T: Clone> Quadtree<T> {
         return found
     }
 
-    // Query the quadtree for points within a circle
+    /// Query the quadtree for points within a circle
     pub fn query_circle(&self, x:f32, y:f32, range: f32) -> Vec<Point<T>> {
         // make a rect that fits around the range circle
         let rect = Qrect::new(x, y, range, range);
@@ -176,6 +228,7 @@ impl<T: Clone> Quadtree<T> {
         temp
     }
 
+    /// Collect all points in the quadtree
     pub fn collect(&self) -> Vec<Point<T>> {
         self.query_rect(&self.boundary)
     }
@@ -183,6 +236,7 @@ impl<T: Clone> Quadtree<T> {
 }
 
 
+/// tests
 #[cfg(test)]
 mod tests {
     use super::*;
