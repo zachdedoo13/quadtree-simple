@@ -4,11 +4,9 @@ use macroquad::rand::*;
 
 
 
-const WIDTH: f32 = 1920.0;
-const HEIGHT: f32 = 1080.0;
 #[macroquad::main("BasicShapes")]
 async fn main() {
-    let mut qt:Quadtree<bool> = Quadtree::new(Qrect::screen_size(WIDTH - 100., HEIGHT - 100.), 4);
+    let mut qt:Quadtree<bool> = Quadtree::new(Qrect::screen_size(screen_width(), screen_height()), 4);
 
 
     loop {
@@ -18,6 +16,9 @@ async fn main() {
             let x = mouse_position().0;
             let y = mouse_position().1;
             qt.insert(&Point::new(x, y, false));
+        }
+        if is_key_pressed(KeyCode::Space) {
+            qt = Quadtree::new(Qrect::screen_size(screen_width(), screen_height()), 4);
         }
 
 
