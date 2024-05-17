@@ -1,1 +1,0 @@
-C:\Users\zacha\Desktop\Projects\quadtree-simple\target\package\quadtree_simple-0.1.6\target\debug\libquadtree_simple.rlib: C:\Users\zacha\Desktop\Projects\quadtree-simple\target\package\quadtree_simple-0.1.6\src\lib.rs
