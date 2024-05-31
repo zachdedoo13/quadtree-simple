@@ -220,8 +220,8 @@ impl<T: Clone> Quadtree<T> {
         temp.retain(|point| {
             let dist_x = point.x - x;
             let dist_y = point.y - y;
-            let dist = (dist_x * dist_x + dist_y * dist_y).sqrt();
-            if dist < range {
+            let dist = dist_x * dist_x + dist_y * dist_y;
+            if dist < (range * range) {
                 true
             } else {
                 false
