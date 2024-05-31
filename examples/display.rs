@@ -1,6 +1,5 @@
 use quadtree_simple::*;
 use macroquad::prelude::*;
-use macroquad::rand::*;
 
 
 
@@ -19,6 +18,15 @@ async fn main() {
         }
         if is_key_pressed(KeyCode::Space) {
             qt = Quadtree::new(Qrect::screen_size(screen_width(), screen_height()), 4);
+        }
+
+        if is_mouse_button_down(MouseButton::Right) {
+            let x = mouse_position().0;
+            let y = mouse_position().1;
+            let check = qt.query_circle(x, y, 50.);
+            for point in check {
+                draw_circle(point.x, point.y, 2.0, GREEN);
+            }
         }
 
 

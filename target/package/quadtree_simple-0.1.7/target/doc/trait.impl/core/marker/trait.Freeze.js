@@ -1,3 +1,0 @@
-(function() {var implementors = {
-"quadtree_simple":[["impl&lt;T&gt; Freeze for <a class=\"struct\" href=\"quadtree_simple/struct.Point.html\" title=\"struct quadtree_simple::Point\">Point</a>&lt;T&gt;<div class=\"where\">where\n    T: Freeze,</div>",1,["quadtree_simple::Point"]],["impl Freeze for <a class=\"struct\" href=\"quadtree_simple/struct.Qrect.html\" title=\"struct quadtree_simple::Qrect\">Qrect</a>",1,["quadtree_simple::Qrect"]],["impl&lt;T&gt; Freeze for <a class=\"struct\" href=\"quadtree_simple/struct.Quadtree.html\" title=\"struct quadtree_simple::Quadtree\">Quadtree</a>&lt;T&gt;",1,["quadtree_simple::Quadtree"]]]
-};if (window.register_implementors) {window.register_implementors(implementors);} else {window.pending_implementors = implementors;}})()
