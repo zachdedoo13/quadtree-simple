@@ -11,15 +11,19 @@ async fn main() {
     loop {
         clear_background(BLACK);
 
+        // inset points
         if is_mouse_button_down(MouseButton::Left) {
             let x = mouse_position().0;
             let y = mouse_position().1;
             qt.insert(&Point::new(x, y, false));
         }
+        
+        // clear the quadtree
         if is_key_pressed(KeyCode::Space) {
             qt = Quadtree::new(Qrect::screen_size(screen_width(), screen_height()), 4);
         }
 
+        // query points
         if is_mouse_button_down(MouseButton::Right) {
             let x = mouse_position().0;
             let y = mouse_position().1;
